@@ -26,8 +26,4 @@ object Delt extends App{
   //saving the result to parquet again
   df5.write.parquet("user/venkat/final_result")
 
-
-
-
-
 }
