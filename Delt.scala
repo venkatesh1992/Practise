@@ -1,6 +1,3 @@
-package com.novartis
-
-
 import org.apache.spark.sql.{ SparkSession}
 import org.apache.spark.sql.functions._
 object Delt extends App{
@@ -11,11 +8,11 @@ object Delt extends App{
   import spark.implicits._
 
     //reading the file
-  val df=spark.read.option("header",true).csv("/user/thotave5/data.csv")
+  val df=spark.read.option("header",true).csv("/user/venkat/data.csv")
   //converting to parquet
-  val df1=df.write.parquet("/user/thotave5/data_parquet")
-  //reading parqut file again
-  val df2=spark.read.parquet("/user/thotave5/data_parquet")
+  val df1=df.write.parquet("/user/venkat/data_parquet")
+  //reading parquet file again
+  val df2=spark.read.parquet("/user/venkat/data_parquet")
   //conveting to required format
   val df3=df2.withColumn("tmp", split($"Values", "\\;")).select(col("Country"),
     $"tmp".getItem(0).as("col1").cast("int"),
@@ -27,7 +24,7 @@ object Delt extends App{
   //converting to final required format
   val df5=df4.select($"Country",concat_ws(";",$"col1",$"col2",$"col3",$"col4") as "Values")
   //saving the result to parquet again
-  df5.write.parquet("user/thotave5/final_result")
+  df5.write.parquet("user/venkat/final_result")
 
 
 
